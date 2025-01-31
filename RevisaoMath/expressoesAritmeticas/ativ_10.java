@@ -1,0 +1,10 @@
+package RevisaoMath.expressoesAritmeticas;
+
+public class ativ_10 {
+    public static void main(String[] args) {
+        int num1 = 8, num2 = 2, num3 = 6, num4 = 4;
+        int resultado = (num1+num2)*(num3-num4);
+
+        System.out.printf("(%d + %d) * (%d - %d) = %d", num1, num2, num3, num4, resultado);
+    }
+}
