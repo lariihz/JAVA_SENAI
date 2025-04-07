@@ -1,15 +1,37 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+package Ativ_fix_DS_arquivos_03.Application;
+
+import Ativ_fix_DS_arquivos_03.Entities.Product;
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Locale;
+
 public class Main {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+        Locale.setDefault(Locale.US);
+        String path = "src/main/java/Ativ_fix_DS_arquivos_03/src/file";
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(path))) {
+            String line = bufferedReader.readLine();
+            ArrayList<Product> products = new ArrayList<Product>();
+            while (line!=null) {
+                String[] attributes = line.split(",");
+                products.add(new Product(attributes[0], Double.parseDouble(attributes[1]), Integer.parseInt(attributes[2])));
+                line = bufferedReader.readLine();
+            }
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
+            path = "src/main/java/Ativ_fix_DS_arquivos_03/out/summary.csv";
+
+            try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(path))) {
+                for (Product product : products) {
+                    line = product.getName() + ", " + String.format("%.2f", product.totalValue());
+                    bufferedWriter.write(line);
+                    bufferedWriter.newLine();
+                }
+            } catch (IOException e) {
+                System.out.println("Error: " + e.getMessage());
+            }
+        } catch (IOException e) {
+            System.out.println("Error: " + e.getMessage());
         }
     }
 }
